@@ -1,0 +1,47 @@
+{
+  "_from": "country-data-find",
+  "_id": "country-data-find@0.0.3",
+  "_inBundle": false,
+  "_integrity": "sha512-XtTVBUr0GU8yZTEc7ffO5bHnm2HlQ8veJWfCpktIbaxpRrqneqq0j0574eZ9BwHSZoWs9rBOh/wPDVkGZQAtwg==",
+  "_location": "/country-data-find",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "country-data-find",
+    "name": "country-data-find",
+    "escapedName": "country-data-find",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/country-data-find/-/country-data-find-0.0.3.tgz",
+  "_shasum": "3a4cadcc16ac4344b45fc7ff1932445b7ed35ca6",
+  "_spec": "country-data-find",
+  "_where": "/home/lasantha/Downloads",
+  "author": {
+    "name": "Lasantha Lakmal"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Information about countries - like their ISO (2/3) codes and currencies",
+  "keywords": [
+    "country",
+    "data",
+    "code",
+    "list",
+    "currencies",
+    "information"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "country-data-find",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.3"
+}
