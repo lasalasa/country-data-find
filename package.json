@@ -2,7 +2,7 @@
   "name": "country-data-find",
   "version": "0.0.5",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon --watch . --exec 'mocha'"
   },
   "description": "Information about countries - like their ISO (2/3) codes and currencies",
   "repository": {
@@ -18,5 +18,9 @@
     "information"
   ],
   "license": "ISC",
-  "main": "index.js"
+  "main": "index.js",
+  "dependencies": {
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.4"
+  }
 }
