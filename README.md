@@ -12,7 +12,7 @@ npm install country-data-find --save
 const Country = require('country-code-find');
 
 // you can get all countries JSON format
-let countriyJSON = Country.JSON();
+let countryJSON = Country.JSON();
 
 // you can get all countries Array format
 let arrayJSON = Country.Array();
@@ -40,4 +40,4 @@ let sl = Country.findCountry('Sri Lanka');
 
 ## Notes
 
-This npm patily done, but woking fine. I will hope to improve this module.
+The work on this npm package is partialy completed, however it works fine. I hope to improve this module.
