@@ -21,6 +21,6 @@
   "main": "index.js",
   "dependencies": {
     "mocha": "^6.2.3",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.17"
   }
 }
