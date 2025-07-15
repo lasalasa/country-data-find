@@ -1,26 +1,37 @@
 {
   "name": "country-data-find",
-  "version": "0.0.5",
+  "version": "0.0.6",
+  "description": "Information about countries - like their ISO (2/3) codes, names, and currencies.",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "data/"
+  ],
   "scripts": {
-    "test": "nodemon --watch . --exec 'mocha'"
+    "test": "mocha"
   },
-  "description": "Information about countries - like their ISO (2/3) codes and currencies",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lasalasa/country-data-find"
+    "url": "git+https://github.com/lasalasa/country-data-find.git"
   },
   "keywords": [
     "country",
     "data",
+    "ISO2",
+    "ISO3",
     "code",
-    "list",
     "currencies",
-    "information"
+    "lookup",
+    "names"
   ],
-  "license": "ISC",
-  "main": "index.js",
-  "dependencies": {
+  "author": "Lasalasa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lasalasa/country-data-find/issues"
+  },
+  "homepage": "https://github.com/lasalasa/country-data-find#readme",
+  "devDependencies": {
     "mocha": "^11.1.0",
-    "nodemon": "^2.0.3"
+    "nodemon": "^3.1.10"
   }
 }
