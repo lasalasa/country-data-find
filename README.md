@@ -14,7 +14,7 @@ npm install country-data-find --save
 
 ---
 
-## Usage
+## Usage (JavaScript)
 
 ```js
 const Country = require('country-data-find');
@@ -68,6 +68,58 @@ const flag = Country.getFlagEmoji('LK'); // 🇱🇰
 // Validate if a string is a valid ISO2/ISO3 country code
 const isValid = Country.isValidCountryCode('LKA'); // true
 ```
+
+---
+
+## Usage (TypeScript)
+
+`country-data-find` ships with full TypeScript typings out of the box!
+
+```ts
+import {
+  Country,
+  CountryType,
+  findCountriesByCurrency,
+  getFlagEmoji,
+  isValidCountryCode,
+  fuzzyFindCountry,
+  autocompleteCountry
+} from 'country-data-find';
+
+// All countries as strongly-typed array
+const all: CountryType[] = Country.Array();
+
+// Find by code, with type inference
+const sriLanka: CountryType | undefined = Country.findByCode('LK');
+
+// Get all names in all languages (type-safe)
+const allNames: string[] = Country.getAllNames('LK');
+
+// Find countries by currency code
+const usdCountries: CountryType[] = findCountriesByCurrency('USD');
+
+// Fuzzy country search
+const fuzzy = fuzzyFindCountry('Sr Lanka');
+
+// Get flag emoji
+const flag: string = getFlagEmoji('LK');
+
+// Type guard for country code
+const valid: boolean = isValidCountryCode('USA');
+
+// Autocomplete countries by name
+const auto: CountryType[] = autocompleteCountry('Ger', 'ENG');
+```
+
+**Tip:**
+All methods, return types, and object shapes are fully type-safe and provide autocompletion in your editor.
+
+---
+
+## Typings Support
+
+* Full TypeScript declarations included (`index.d.ts`)
+* No extra install required; types are loaded automatically
 
 ---
 
