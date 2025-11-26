@@ -3,13 +3,8 @@
 const CountryJSON = require('./data/Country.json');
 const CountryArray = Object.values(CountryJSON);
 
-// Optionally require Fuse.js for fuzzy search (must install: npm install fuse.js)
-let Fuse;
-try {
-  Fuse = require('fuse.js');
-} catch (e) {
-  // If Fuse.js not installed, fuzzyFindCountry will throw an error
-}
+// Require Fuse.js for fuzzy search
+const Fuse = require('fuse.js');
 
 /** Utility: Normalize a string for search (case-insensitive, trim) */
 function normalize(str) {
@@ -67,30 +62,85 @@ const Country = {
       code: country.ISO2_CODE,
       name: country.LIST_OF_NAME[lang] || country.LIST_OF_NAME['ENG'] || []
     }));
+  },
+
+  /** Find by capital city */
+  findByCapital: (capital) => {
+    if (!capital) return null;
+    const nCapital = normalize(capital);
+    return CountryArray.find(c => c.CAPITAL && normalize(c.CAPITAL) === nCapital);
+  },
+
+  /** Find countries by spoken language */
+  findByLanguage: (language) => {
+    if (!language) return [];
+    const nLang = normalize(language);
+    return CountryArray.filter(c => 
+      (c.LANGUAGES || []).some(l => normalize(l) === nLang)
+    );
+  },
+
+  /** Find countries by timezone */
+  findByTimezone: (timezone) => {
+    if (!timezone) return [];
+    // simple exact match or partial match could be discussed, but exact match on the string in array is safest for now
+    // or we can normalize. Timezones in data are like "UTC+05:30"
+    return CountryArray.filter(c => 
+      (c.TIMEZONES || []).includes(timezone)
+    );
+  },
+
+  /** Get neighbors (bordering countries) */
+  getNeighbors: (code) => {
+    const country = Country.findByCode(code);
+    if (!country || !country.BORDERS) return [];
+    return country.BORDERS.map(borderCode => Country.findByCode(borderCode)).filter(Boolean);
+  },
+
+  /** Get demonym */
+  getDemonym: (code) => {
+    const country = Country.findByCode(code);
+    return country ? country.DEMONYM : null;
+  },
+
+  /** Get area */
+  getArea: (code) => {
+    const country = Country.findByCode(code);
+    return country ? country.AREA : null;
+  },
+
+  /** Get population */
+  getPopulation: (code) => {
+    const country = Country.findByCode(code);
+    return country ? country.POPULATION : null;
   }
 };
 
 /** --- ADVANCED SEARCH FEATURES --- **/
 
+// Cache Fuse instance
+let fuseInstance = null;
+
 /** Fuzzy country name search (requires fuse.js) */
 function fuzzyFindCountry(name) {
-  if (!Fuse) throw new Error('fuzzyFindCountry requires fuse.js. Install with `npm install fuse.js`');
   if (!name) return null;
 
-  // Prepare flat name list
-  const countryNames = CountryArray.flatMap(c =>
-    Object.entries(c.LIST_OF_NAME).flatMap(([lang, names]) =>
-      names.map(n => ({
-        name: n,
-        lang,
-        ISO2: c.ISO2_CODE,
-        ISO3: c.ISO3_CODE
-      }))
-    )
-  );
-  const fuse = new Fuse(countryNames, { keys: ['name'], threshold: 0.3 });
+  if (!fuseInstance) {
+    // Prepare flat name list
+    const countryNames = CountryArray.flatMap(c =>
+      Object.entries(c.LIST_OF_NAME).flatMap(([lang, names]) =>
+        names.map(n => ({
+          name: n,
+          lang,
+          ISO2: c.ISO2_CODE,
+          ISO3: c.ISO3_CODE
+        }))
+      )
+    );
+    fuseInstance = new Fuse(countryNames, { keys: ['name'], threshold: 0.3 });
+  }
 
-  const result = fuse.search(name);
+  const result = fuseInstance.search(name);
   if (!result.length) return null;
   // Return country object by ISO2 or ISO3 code
   return Country.findByCode(result[0].item.ISO2 || result[0].item.ISO3);

@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "test": "mocha",
-    "type-test": "tsc --noEmit --skipLibCheck test/index.spec.ts"
+    "type-test": "tsc --noEmit --skipLibCheck test/index.spec.ts",
+    "publish-package": "node scripts/publish.js"
   },
   "repository": {
     "type": "git",

@@ -20,6 +20,13 @@ export interface CountryType {
   CURRENCY?: CountryCurrency[];  // List of currencies
   REGION?: string;               // e.g., 'Asia'
   PHONE_CODE?: string[] | string;// e.g., ['94']
+  CAPITAL?: string;              // e.g., 'Colombo'
+  POPULATION?: number;           // e.g., 21803000
+  DEMONYM?: string;              // e.g., 'Sri Lankan'
+  AREA?: number;                 // e.g., 65610
+  TIMEZONES?: string[];          // e.g., ['UTC+05:30']
+  BORDERS?: string[];            // e.g., ['IND']
+  LANGUAGES?: string[];          // e.g., ['Sinhala', 'Tamil']
   [key: string]: any;            // Allow extension for extra fields in Country.json
 }
 
@@ -59,6 +66,27 @@ export declare const Country: {
 
   /** List all country names in a specific language */
   filterByLanguage(lang?: string): { code: string; name: string[] }[];
+
+  /** Find by capital city */
+  findByCapital(capital: string): CountryType | undefined;
+
+  /** Find countries by spoken language */
+  findByLanguage(language: string): CountryType[];
+
+  /** Find countries by timezone */
+  findByTimezone(timezone: string): CountryType[];
+
+  /** Get neighbors (bordering countries) */
+  getNeighbors(code: string): CountryType[];
+
+  /** Get demonym */
+  getDemonym(code: string): string | null;
+
+  /** Get area */
+  getArea(code: string): number | null;
+
+  /** Get population */
+  getPopulation(code: string): number | null;
 };
 
 /** ---- ADVANCED FUNCTIONS ---- */

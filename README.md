@@ -67,6 +67,23 @@ const flag = Country.getFlagEmoji('LK'); // 🇱🇰
 
 // Validate if a string is a valid ISO2/ISO3 country code
 const isValid = Country.isValidCountryCode('LKA'); // true
+
+// Find a country by capital city
+const sriLanka = Country.findByCapital('Sri Jayawardenepura Kotte');
+
+// Find countries by language
+const sinhalaCountries = Country.findByLanguage('Sinhala');
+
+// Find countries by timezone
+const utc530 = Country.findByTimezone('UTC+05:30');
+
+// Get neighbors of a country
+const neighbors = Country.getNeighbors('LK'); // Returns array of country objects
+
+// Get country demographics
+const demonym = Country.getDemonym('LK'); // "Sri Lankan"
+const area = Country.getArea('LK'); // 65610
+const population = Country.getPopulation('LK'); // 21919000
 ```
 
 ---
@@ -109,6 +126,23 @@ const valid: boolean = isValidCountryCode('USA');
 
 // Autocomplete countries by name
 const auto: CountryType[] = autocompleteCountry('Ger', 'ENG');
+
+// Find by capital
+const capital: CountryType | undefined = Country.findByCapital('Colombo');
+
+// Find by language
+const langCountries: CountryType[] = Country.findByLanguage('Sinhala');
+
+// Find by timezone
+const tzCountries: CountryType[] = Country.findByTimezone('UTC+05:30');
+
+// Get neighbors
+const neighbors: CountryType[] = Country.getNeighbors('LK');
+
+// Get demographics
+const demonym: string | null = Country.getDemonym('LK');
+const area: number | null = Country.getArea('LK');
+const pop: number | null = Country.getPopulation('LK');
 ```
 
 **Tip:**
@@ -244,6 +278,11 @@ All methods, return types, and object shapes are fully type-safe and provide aut
 * **Country flag emoji** lookup by ISO2 code
 * **Validation** of country codes
 * Access all data as **JSON** or **array**
+* Find country by **capital city**
+* Find countries by **language**
+* Find countries by **timezone**
+* Get **neighbors** (bordering countries)
+* Get **demographics** (demonym, area, population)
 
 ---
 
