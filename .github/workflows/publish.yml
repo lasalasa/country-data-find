@@ -18,11 +18,13 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version: "22" # Use LTS
 
       - run: npm ci
       - run: npm test --if-present
       - run: npm run build --if-present
+      - run: npm config set registry https://registry.npmjs.org/
+
 
       # Trusted Publishing requires --provenance
       - run: npm publish --provenance --access public
