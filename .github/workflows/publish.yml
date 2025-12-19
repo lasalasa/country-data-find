@@ -3,23 +3,50 @@ name: Publish Package
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 permissions:
-  id-token: write  # Required for OIDC
+  id-token: write
   contents: read
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
-      - run: npm publish
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+
+      # Ensure npm CLI is new enough for Trusted Publishing (OIDC)
+      - name: Upgrade npm
+        run: |
+          npm i -g npm@latest
+          node -v
+          npm -v
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build (if present)
+        run: npm run build --if-present
+
+      # Debug to confirm OIDC is being used and no token is injected
+      - name: Debug OIDC vs Token
+        shell: bash
+        run: |
+          echo "OIDC URL set? $([ -n "${ACTIONS_ID_TOKEN_REQUEST_URL}" ] && echo yes || echo no)"
+          echo "OIDC TOKEN set? $([ -n "${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" ] && echo yes || echo no)"
+          echo "NODE_AUTH_TOKEN set? $([ -n "${NODE_AUTH_TOKEN}" ] && echo yes || echo no)"
+          echo "NPM_CONFIG_USERCONFIG: ${NPM_CONFIG_USERCONFIG:-"(not set)"}"
+
+      - name: Publish to npm
+        run: npm publish
