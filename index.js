@@ -75,7 +75,7 @@ const Country = {
   findByLanguage: (language) => {
     if (!language) return [];
     const nLang = normalize(language);
-    return CountryArray.filter(c => 
+    return CountryArray.filter(c =>
       (c.LANGUAGES || []).some(l => normalize(l) === nLang)
     );
   },
@@ -85,7 +85,7 @@ const Country = {
     if (!timezone) return [];
     // simple exact match or partial match could be discussed, but exact match on the string in array is safest for now
     // or we can normalize. Timezones in data are like "UTC+05:30"
-    return CountryArray.filter(c => 
+    return CountryArray.filter(c =>
       (c.TIMEZONES || []).includes(timezone)
     );
   },
@@ -225,6 +225,7 @@ function isValidCountryCode(code) {
 
 /** Export all APIs */
 module.exports = {
+  Country,
   ...Country,
   fuzzyFindCountry,
   findCountriesByCurrency,
