@@ -23,8 +23,7 @@ jobs:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
 
-      # Ensure npm CLI is new enough for Trusted Publishing (OIDC)
-      - name: Upgrade npm
+      - name: Upgrade npm (OIDC support)
         run: |
           npm i -g npm@latest
           node -v
@@ -39,7 +38,6 @@ jobs:
       - name: Build (if present)
         run: npm run build --if-present
 
-      # Debug to confirm OIDC is being used and no token is injected
       - name: Debug OIDC vs Token
         shell: bash
         run: |
@@ -48,5 +46,16 @@ jobs:
           echo "NODE_AUTH_TOKEN set? $([ -n "${NODE_AUTH_TOKEN}" ] && echo yes || echo no)"
           echo "NPM_CONFIG_USERCONFIG: ${NPM_CONFIG_USERCONFIG:-"(not set)"}"
 
-      - name: Publish to npm
+      - name: Force OIDC (disable token auth)
+        shell: bash
+        run: |
+          if [ -n "${NPM_CONFIG_USERCONFIG}" ] && [ -f "${NPM_CONFIG_USERCONFIG}" ]; then
+            echo "Cleaning token from ${NPM_CONFIG_USERCONFIG}"
+            sed -i '/_authToken/d' "${NPM_CONFIG_USERCONFIG}" || true
+          fi
+
+      - name: Publish to npm (OIDC)
+        env:
+          NODE_AUTH_TOKEN: ""
+          NPM_TOKEN: ""
         run: npm publish
