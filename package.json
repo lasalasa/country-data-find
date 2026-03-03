@@ -43,5 +43,11 @@
   },
   "dependencies": {
     "fuse.js": "^7.1.0"
+  },
+  "overrides": {
+    "serialize-javascript": ">=7.0.3",
+    "diff": ">=5.2.0",
+    "minimatch": ">=5.1.8",
+    "rollup": ">=4.59.0"
   }
 }
